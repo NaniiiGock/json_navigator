@@ -1,9 +1,11 @@
+"""module for navigation through the .json file"""
+
 import json
-def recur(object):
+def recur(object1):
     """
-    this is the recursive function for looking for the 
+    this is the recursive function for looking for the
     information in the file
-    it has 3 options how to show the object 
+    it has 3 options how to show the object
     depending on the file type:
 
     - if it is a dictionary it shows the keys
@@ -15,7 +17,7 @@ def recur(object):
     as an answer
 
     --- the user has an option to go back to the first level
-    where he is choosing the section but without 
+    where he is choosing the section but without
     choosing the file one more time
 
     """
@@ -25,50 +27,47 @@ def recur(object):
         print("<<< ")
         return
     try:
-        if isinstance(object,dict):
-            for key in object.keys():
+        if isinstance(object1,dict):
+            for key in object1.keys():
                 print("- ", key)
             print("what section you want?")
             section = input()
-            recur(object[section])
-            
-        elif isinstance(object,list):
+            recur(object1[section])
+        elif isinstance(object1,list):
             print("- ", " list  ")
-            lenn = len(object)
+            lenn = len(object1)
             print("you have ", lenn, "sections in the list, which you want?")
             i = int(input())
-            recur(object[i])
+            recur(object1[i])
 
         else:
             print('answer:')
-            if not object:
+            if not object1:
                 print("the answer is empty")
             else:
-                print(object)
-             
-    except:
+                print(object1)
+    except Exception:
         print("try one mpre time")
-        recur(object)
+        recur(object1)
 
 
 def read_file():
     """
     the function received the file name, which should be read
-    after opening the file it calls the recursive function 
+    after opening the file it calls the recursive function
     to move through the file, chosen by the user
 
     user has the option to end the program pressing "n"
-    
     """
-    path_to_file = input("what file do you want to explore?") 
+    path_to_file = input("what file do you want to explore?")
     with open(path_to_file, encoding='utf-8') as file:
         data = json.load(file)
     while True:
         print("to start press \"y\", to go out press \"n\": ")
-        a = input(">>> ")
-        if a == "y":
+        text = input(">>> ")
+        if text == "y":
             recur(data)
-        elif a == "n":
+        elif text == "n":
             print("ok, do pobachennia")
-            return 
+            return
 read_file()
